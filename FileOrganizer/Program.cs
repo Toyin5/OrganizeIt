@@ -1,50 +1,55 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
-
-List<string> audioFiles = [".mp3"];
-List<string> videoFiles = [".mp4"];
-List<string> documents = [".pdf"];
-List<string> softwares = [".exe"];
-
-
-
-//string directoryPath = Directory.GetCurrentDirectory();
-var directoryPath = "C:\\Users\\TOYIN\\Downloads\\Testing";
-if (Directory.Exists(directoryPath))
+﻿namespace  FileOrganizer;
+class Program
 {
-    var files = Directory.GetFiles(directoryPath);
-    foreach (var item in files)
+    static void Main(string[] args)
     {
-        FileInfo fileInfo = new FileInfo(item);
+        // Define your configurations
+        var configs = new Configs().GetConfigs();
 
-        if (audioFiles.Contains(fileInfo.Extension))
+        if (configs is null)
         {
-            var dir = Directory.CreateDirectory(directoryPath + "\\Audios");
-            dir.Create();
-            File.Move(fileInfo.FullName, dir.FullName + "\\" + item);
+            Console.WriteLine("Error: Failed to read config file.");
+            return;
+        }
+        
+
+        // Define target directory
+        const string directoryPath = @"C:\Users\TOYIN\Downloads\Testing";
+
+        if (!Directory.Exists(directoryPath))
+        {
+            Console.WriteLine("Invalid directory path.");
+            return;
         }
 
-        if (videoFiles.Contains(fileInfo.Extension))
+        
+        // Get all files in the directory
+        var files = Directory.GetFiles(directoryPath);
+
+        foreach (var file in files)
         {
-            var dir = Directory.CreateDirectory(directoryPath + "\\Videos");
-            dir.Create();
-            File.Move(fileInfo.FullName, dir.FullName + "\\" + item);
+            FileInfo fileInfo = new FileInfo(file);
+
+            // Find matching configuration for the file extension
+            var matchingConfig = configs.Configurations.Find(config =>
+                config.Extensions.Contains(fileInfo.Extension.ToLower()));
+
+            if (matchingConfig is null)
+            {
+                Console.WriteLine($"File {fileInfo.FullName} matches no configuration.");
+                continue;
+            }
+            // Create the target directory if it doesn't exist
+            var targetDirPath = Path.Combine(directoryPath, matchingConfig.DirectoryName);
+            Directory.CreateDirectory(targetDirPath);
+
+            // Move the file
+            var targetFilePath = Path.Combine(targetDirPath, fileInfo.Name);
+            File.Move(fileInfo.FullName, targetFilePath);
+
+            Console.WriteLine($"Moved {fileInfo.Name} to {targetDirPath}");
         }
 
-        if (documents.Contains(fileInfo.Extension))
-        {
-            var dir = Directory.CreateDirectory(directoryPath + "\\Documents");
-            dir.Create();
-            File.Move(fileInfo.FullName, dir.FullName + "\\" + fileInfo.Name);
-        }
-
-        if (softwares.Contains(fileInfo.Extension))
-        {
-            var dir = Directory.CreateDirectory(directoryPath + "\\Softwares");
-            dir.Create();
-            File.Move(fileInfo.FullName, dir.FullName + "\\" + item);
-        }
-
+        Console.WriteLine("File organization complete.");
     }
 }
-Console.WriteLine($"Current running directory: {directoryPath}");

@@ -1,0 +1,16 @@
+{
+  "Configurations": [
+    {
+      "DirectoryName": "Documents",
+      "Extensions": [".pdf", ".docx", ".txt"]
+    },
+    {
+      "DirectoryName": "Images",
+      "Extensions": [".jpg", ".png", ".gif"]
+    },
+    {
+      "DirectoryName": "Videos",
+      "Extensions": [".mp4", ".avi"]
+    }
+  ]
+}
