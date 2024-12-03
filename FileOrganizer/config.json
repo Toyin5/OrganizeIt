@@ -11,6 +11,10 @@
     {
       "DirectoryName": "Videos",
       "Extensions": [".mp4", ".avi"]
+    },
+    {
+      "DirectoryName": "Applications",
+      "Extensions": [".exe", ".msi"]
     }
   ]
 }
