@@ -12,23 +12,12 @@ public class Configs
 {
     public List<Config> Configurations { get; set; }
 
-    public Configs? GetConfigs()
+    public Configs? GetConfigs(FileInfo file)
     {
-        // Load configuration from JSON file
-        string currentDir = Directory.GetCurrentDirectory();
-
-        // Navigate up to the root of the project
-        string projectRoot = Path.GetFullPath(Path.Combine(currentDir, "..", "..", ".."));
-
-        // File path in the root
-        string filePath = Path.Combine(projectRoot, "config.json");
-        const string configPath = "./config.json";
-        Configs configs;
-
-        try
+       try
         {
-            var jsonString = File.ReadAllText(filePath);
-            configs = JsonSerializer.Deserialize<Configs>(jsonString) ?? new Configs();
+            var jsonString = File.ReadAllText(file.FullName);
+            return JsonSerializer.Deserialize<Configs>(jsonString) ?? new Configs();
         }
         catch (Exception ex)
         {
@@ -36,7 +25,5 @@ public class Configs
             ExceptionHandler.CatchExceptions(ex);
             return null;
         }
-
-        return configs;
     }
 }

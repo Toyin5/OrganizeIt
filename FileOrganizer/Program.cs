@@ -1,55 +1,61 @@
-﻿using FileOrganizer;
+﻿using System.CommandLine;
 
+namespace FileOrganizer;
 
-// Define your configurations
-var configs = new Configs().GetConfigs();
-
-if (configs is null)
+class Program
 {
-    Console.WriteLine("Error: Failed to read config file.");
-    return;
-}
-
-// Define target directory
-const string directoryPath = @"C:\Users\TOYIN\Downloads\Testing";
-
-if (!Directory.Exists(directoryPath))
-{
-    Console.WriteLine("Invalid directory path.");
-    return;
-}
-
-// Get all files in the directory
-var files = Directory.GetFiles(directoryPath);
-
-if (files.Length == 0)
-{
-    Console.WriteLine("No files in this directory");
-    return;
-}
-
-foreach (var file in files)
-{
-    FileInfo fileInfo = new FileInfo(file);
-
-    // Find matching configuration for the file extension
-    var matchingConfig = configs.Configurations.Find(config =>
-        config.Extensions.Contains(fileInfo.Extension.ToLower()));
-
-    if (matchingConfig is null)
+    private static Configs _configs = default;
+    static async Task<int> Main(string[] args)
     {
-        Console.WriteLine($"File {fileInfo.FullName} matches no configuration.");
-        continue;
+        var fileOption = new Option<FileInfo?>(
+            name: "--file",
+            description: "An option whose argument is parsed as a FileInfo",
+            isDefault: true,
+            parseArgument: result =>
+            {
+                if (result.Tokens.Count == 0)
+                {
+                    return new FileInfo("config.json");
+                }
+                string? filePath = result.Tokens.Single().Value;
+                if (!File.Exists(filePath))
+                {
+                    result.ErrorMessage = "File does not exist";
+                    return null;
+                }
+                else
+                {
+                    return new FileInfo(filePath);
+                }
+            });
+        
+        var directoryOption = new Argument<string>(
+            "--dir",
+            description: "The target directory(the one you wish to organize)");
+
+        var rootCommand = new RootCommand("CLI application to organize files");
+        rootCommand.AddOption(fileOption);
+        rootCommand.AddArgument(directoryOption);
+        
+        rootCommand.SetHandler((file) => 
+            { 
+                ReadFile(file!); 
+            },
+            fileOption);
+        
+        rootCommand.SetHandler((dir) => Organize(dir),
+            directoryOption);
+
+        return await rootCommand.InvokeAsync(args);
     }
-    // Create the target directory if it doesn't exist
-    var targetDirPath = Path.Combine(directoryPath, matchingConfig.DirectoryName);
-    Directory.CreateDirectory(targetDirPath);
 
-    // Move the file
-    var targetFilePath = Path.Combine(targetDirPath, fileInfo.Name);
-    File.Move(fileInfo.FullName, targetFilePath);
+    static void ReadFile(FileInfo file)
+    {
+        _configs = new Configs().GetConfigs(file);
+    }
 
-    Console.WriteLine($"Moved {fileInfo.Name} to {targetDirPath}");
+    static void Organize(string directory)
+    {
+        Organizer.Organize(directory, _configs);
+    }
 }
-
-Console.WriteLine("File organization complete.");
