@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace FileOrganizer;
+namespace OrganizeIt.Cli;
 
 public class Config
 {
