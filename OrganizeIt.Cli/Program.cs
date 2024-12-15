@@ -1,5 +1,5 @@
 ﻿using CommandLine;
-using FileOrganizer;
+using OrganizeIt.Cli;
 
 public static class Program
 {
@@ -8,7 +8,7 @@ public static class Program
         Parser.Default.ParseArguments<Options>(args)
             .WithParsed<Options>(o =>
             {
-                Console.WriteLine("Welcome to the FileOrganizer!");
+                Console.WriteLine("Welcome to the OrganizeIt.Cli!");
                 var configs = new Configs();
                 FileInfo file = default;
                 if (!string.IsNullOrEmpty(o.Config))
@@ -30,7 +30,6 @@ public static class Program
                 configs = configs.GetConfigs(file);
                 var result = Organizer.Organize(o.Directory, configs);
                 if (result >= 1) Console.WriteLine("Organizer ran successfully!"); else Console.WriteLine("Organizer failed");
-                return;
             });
         
     }

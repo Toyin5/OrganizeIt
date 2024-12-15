@@ -1,4 +1,4 @@
-namespace FileOrganizer;
+namespace OrganizeIt.Cli;
 
 public static class Organizer
 {

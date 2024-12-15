@@ -1,6 +1,6 @@
 using CommandLine;
 
-namespace FileOrganizer;
+namespace OrganizeIt.Cli;
 
 public class Options
 {
