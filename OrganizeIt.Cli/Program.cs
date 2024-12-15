@@ -9,28 +9,34 @@ public static class Program
             .WithParsed<Options>(o =>
             {
                 Console.WriteLine("Welcome to the OrganizeIt.Cli!");
-                var configs = new Configs();
-                FileInfo file = default;
-                if (!string.IsNullOrEmpty(o.Config))
+                Configs? configs = new Configs();
+                FileInfo? configFile = GetConfigFile(o.Config);
+                if (configFile == null)
                 {
-                    file = new FileInfo(o.Config);
-                    if (!file.Exists)
-                    {
-                        Console.WriteLine(("Invalid file path."));
-                        return;
-                    }
-                    configs = configs.GetConfigs(file);
-                }
-                file = new FileInfo("config.json");
-                if (!file.Exists)
-                {
-                    Console.WriteLine(("Cannot find config file. Check your installation and try again."));
+                    Console.WriteLine("Cannot proceed without a valid configuration file.");
                     return;
                 }
-                configs = configs.GetConfigs(file);
-                var result = Organizer.Organize(o.Directory, configs);
+                configs = configs.GetConfigs(configFile);
+                int result = Organizer.Organize(o.Directory, configs);
                 if (result >= 1) Console.WriteLine("Organizer ran successfully!"); else Console.WriteLine("Organizer failed");
+                return;
             });
         
+    }
+
+    private static FileInfo? GetConfigFile(string? configPath)
+    {
+        string? filePath = string.IsNullOrEmpty(configPath) ? "config.json" : configPath;
+        FileInfo? file = new FileInfo(filePath);
+
+        if (!file.Exists)
+        {
+            Console.WriteLine(string.IsNullOrEmpty(configPath)
+                ? "Cannot find default config file (config.json). Check your installation and try again."
+                : "Invalid configuration file path.");
+            return null;
+        }
+
+        return file;
     }
 }
