@@ -12,9 +12,13 @@
   </ItemGroup>
 
   <ItemGroup>
-  <Content Include="config.json">
+  <Content Include="./config.json">
     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
   </Content>
 </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrganizeIt.Core\OrganizeIt.Core.csproj" />
+  </ItemGroup>
 
 </Project>

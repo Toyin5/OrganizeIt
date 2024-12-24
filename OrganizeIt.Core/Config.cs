@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace OrganizeIt.Cli;
+namespace OrganizeIt.Core;
 
 public class Config
 {
@@ -10,7 +10,7 @@ public class Config
 
 public class Configs
 {
-    public List<Config> Configurations { get; set; }
+    public List<Config> Configurations { get; set; } = [];
 
     public Configs? GetConfigs(FileInfo file)
     {
