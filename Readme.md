@@ -7,8 +7,35 @@ OrganizeIt is an open-source project designed to help you organize and manage yo
 - **Automatic File Sorting**: Automatically sort files into folders based on file type or custom rules.
 - **Batch Renaming**: Rename multiple files at once using customizable patterns.
 - **File Filtering**: Filter files by type, size, date, and other attributes.
-- **Custom Rules**: Create and apply custom rules for organizing files.
 - **User-Friendly Interface**: Easy-to-use interface for managing your files.
+- **Custom Rules**: Create and apply custom rules for organizing files. 
+
+By default, a default config.json ships with the program [config](https://github.com/Toyin5/OrganizeIt/blob/main/OrganizeIt.Cli/config.json) which is a basic config.
+config.json follows this structure:
+```json
+    {
+    "Configurations": [
+        {
+            "DirectoryName": "Your preferred folder name",
+            "Extensions": [".pdf", ".docx", ".txt"]
+        },
+        {
+            "DirectoryName": "Your preferred folder name",
+            "Extensions": [".jpg", ".png", ".gif"]
+        },
+        {
+            "DirectoryName": "Videos",
+            "Extensions": [".mp4", ".avi"]
+        },
+        {
+            "DirectoryName": "Applications",
+            "Extensions": [".exe", ".msi"]
+        }
+    ]
+    }
+```
+
+The app currently supports organization by extensions. I'm working on making it more flexible
 
 ## Installation
 

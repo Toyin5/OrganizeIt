@@ -10,12 +10,6 @@ public static class Program
             .WithParsed<Options>(o =>
             {
                 Console.WriteLine("Welcome to the OrganizeIt.Cli!");
-                Configs? configs = new Configs();
-                if (string.IsNullOrEmpty(o.Directory) || o.Directory.Equals("."))
-                {
-                    o.Directory = Environment.CurrentDirectory;
-                }
-                Console.WriteLine("Directory to organize: " + o.Directory);
                 FileInfo? configFile = GetConfigFile(o.Config);
                 if (configFile == null)
                 {
@@ -23,6 +17,12 @@ public static class Program
                     Console.ReadKey();
                     return;
                 }
+                Configs? configs = new Configs();
+                if (string.IsNullOrEmpty(o.Directory) || o.Directory.Equals("."))
+                {
+                    o.Directory = Environment.CurrentDirectory;
+                }
+                Console.WriteLine("Directory to organize: " + o.Directory);
                 configs = configs.GetConfigs(configFile);
                 int result = Organizer.Organize(o.Directory, configs);
                 if (result >= 1) Console.WriteLine("Organizer ran successfully!"); else Console.WriteLine("Organizer failed");
