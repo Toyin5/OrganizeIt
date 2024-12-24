@@ -1,4 +1,4 @@
-namespace OrganizeIt.Cli;
+namespace OrganizeIt.Core;
 
 public static class ExceptionHandler
 {
@@ -8,7 +8,7 @@ public static class ExceptionHandler
         string logDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "MyAppLogs");
         // Ensure log directory exists
         Directory.CreateDirectory(logDirectory);
-        string logFilePath = Path.Combine(logDirectory, $"{DateTime.UtcNow:yyyy-MM-dd-HH-mm-ss}-OrganizeIt.Cli.log");
+        string logFilePath = Path.Combine(logDirectory, $"{DateTime.UtcNow:yyyy-MM-dd-HH-mm-ss}-OrganizeIt.log");
 
         // Ensure log directory exists
         Directory.CreateDirectory(logDirectory);
