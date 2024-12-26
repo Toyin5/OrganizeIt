@@ -1,0 +1,21 @@
+name: checksum action
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name : Download checksum
+    - uses: thewh1teagle/checksum@v1.0.0
+      with:
+        patterns: | # Optional
+          *.zip
+          *.tar.gz
+        pre-release: true
