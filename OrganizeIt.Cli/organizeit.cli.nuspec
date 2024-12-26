@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+<package>
     <metadata>
-        <id>organizeit.cli</id>
+        <id>organizeit</id>
         <version>1.0.0</version>
-        <title>OrganizeIt.Cli (Install)</title>
+        <title>OrganizeIt</title>
         <authors>Toyin Muhammed</authors>
         <projectUrl>https://github.com/Toyin5/OrganizeIt</projectUrl>
-        <tags>organizeit.cli file organization</tags>
         <summary>OrganizeIt.Cli is a command-line tool designed to help you organize files in a specified directory based on a configuration file.</summary>
         <description>OrganizeIt.Cli is a command-line tool designed to help you organize files in a specified directory based on a configuration file. It supports custom configuration files and provides feedback on the success or failure of the organization process.</description>
-        <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
-        <requireLicenseAcceptance>true</requireLicenseAcceptance>
+        <tags>organizeit cli files organization folders directories</tags>
+        <copyright>Copyright 2024 Toyin Muhammed</copyright>
+        <licenseUrl>https://github.com/Toyin5/OrganizeIt#license</licenseUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <releaseNotes>https://github.com/Toyin5/OrganizeIt/releases</releaseNotes>
     </metadata>
     <files>
-        <file src="tools\**" target="tools" />
+        <file src="bin\Release\**" target="tools" />
+        <file src="..\LICENSE.txt" target="tools" />
     </files>
 </package>
