@@ -15,7 +15,7 @@
         <releaseNotes>https://github.com/Toyin5/OrganizeIt/releases</releaseNotes>
     </metadata>
     <files>
-        <file src="bin\Release\**" target="tools" />
+        <file src="bin\Release\net8.0\publish\**" target="tools" />
         <file src="..\LICENSE.txt" target="tools" />
     </files>
 </package>
