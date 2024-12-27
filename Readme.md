@@ -6,8 +6,6 @@ OrganizeIt is an open-source project designed to help you organize and manage yo
 
 - **Automatic File Sorting**: Automatically sort files into folders based on file type or custom rules.
 - **Batch Renaming**: Rename multiple files at once using customizable patterns.
-- **File Filtering**: Filter files by type, size, date, and other attributes.
-- **User-Friendly Interface**: Easy-to-use interface for managing your files.
 - **Custom Rules**: Create and apply custom rules for organizing files. 
 
 By default, a default config.json ships with the program [config](https://github.com/Toyin5/OrganizeIt/blob/main/OrganizeIt.Cli/config.json) which is a basic config.
@@ -35,8 +33,70 @@ config.json follows this structure:
     }
 ```
 
-The app currently supports organization by extensions. I'm working on making it more flexible
+The app currently supports organization by extensions. I'm working on making it more flexible.
 
+## How to use it?
+⚠️ You will need [Chocolatey](https://chocolatey.org/install) to run it
+
+- Download the package on chocolatey
+    ```bash
+    choco install organizeit --version=1.0.0
+    ```
+- Navigate to your target directory
+  ```bash
+  cd path/to/your/target/directory
+  ```
+- Run organizeit.cli
+    ```bash
+    > organizeit.cli
+    ```
+    ⚠️Note: This run with the default configuration which is: 
+    
+    ```json
+    {
+            "Configurations": [
+                {
+                "DirectoryName": "Documents",
+                "Extensions": [".pdf", ".docx", ".txt"]
+                },
+                {
+                "DirectoryName": "Images",
+                "Extensions": [".jpg", ".png", ".gif"]
+                },
+                {
+                "DirectoryName": "Videos",
+                "Extensions": [".mp4", ".avi"]
+                },
+                {
+                "DirectoryName": "Applications",
+                "Extensions": [".exe", ".msi"]
+                }
+            ]
+    }
+    ```
+
+### To run with your desired configurations, you can either create a config.json file inside the target directory or specify the path to it using the -c option.
+- Create a custom config.json at the root of the targeted directory that follow the above config then run:
+```bash
+> organizeit.cli
+```
+- Speciffy the path to the custome config.json using the -c flag
+```bash
+> organizeit.cli -c path/to/the/custom/config/file
+```
+You can also check the available commands by passing --help
+```bash
+> organizeit.cli --help
+```
+```bash
+    -c, --config       Set the config file
+
+    -d, --directory    Set the target directory
+
+    --help             Display this help screen.
+
+    --version          Display version information.
+```
 ## Installation
 
 To install OrganizeIt, follow these steps:
@@ -53,12 +113,6 @@ To install OrganizeIt, follow these steps:
     ```bash
     dotnet restore
     ```
-
-## Usage
-
-- A standalone executable
-
-> To use the standalone executable, you will need to download the zipped files in release and run it in your preferred directory
 
 
 
