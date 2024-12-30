@@ -2,6 +2,9 @@
 
 OrganizeIt is an open-source project designed to help you organize and manage your files efficiently. This tool allows you to categorize, move, and rename files based on various criteria.
 
+## Why would you need this?
+Imagine sorting through over 50 files manually—tedious, right? With OrganizeIt, you don't have to. OrganizeIt is a package designed to help you manage and organize your files into separate folders. But it doesn't stope there—it gives you, the user, the ability to create and apply custom rules for your file organization, as well as rename multiple files simultaneously. Save time and stay organized with Organizeit.
+
 ## Features
 
 - **Automatic File Sorting**: Automatically sort files into folders based on file type or custom rules.
@@ -35,6 +38,7 @@ config.json follows this structure:
 
 The app currently supports organization by extensions. I'm working on making it more flexible.
 
+
 ## How to use it?
 ⚠️ You will need [Chocolatey](https://chocolatey.org/install) to run it
 
@@ -48,7 +52,7 @@ The app currently supports organization by extensions. I'm working on making it 
   ```
 - Run organizeit.cli
     ```bash
-    > organizeit.cli
+       organizeit.cli
     ```
     ⚠️Note: This run with the default configuration which is: 
     
@@ -142,3 +146,5 @@ This project is licensed under the GNU AFFERO GENERAL PUBLIC LICENSE. See the [L
 ## Contact
 
 For any questions or suggestions, please open an issue or contact us at [email](mailto:toyinmuhammed50@gmail.com).
+
+
