@@ -1,38 +1,77 @@
-﻿using CommandLine;
-using OrganizeIt.Cli;
+﻿using OrganizeIt.Cli;
 using OrganizeIt.Core;
 
 public static class Program
 {
     public static void Main(string[] args)
     {
-        Parser.Default.ParseArguments<Options>(args)
-            .WithParsed<Options>(o =>
+        string configFileString = "";
+        string targetDirectory = "";
+
+        for (int i = 0; i < args.Length; i++)
+        {
+            string arg = args[i];
+            if (arg.StartsWith("-c") || arg.StartsWith("--config"))
             {
-                Console.WriteLine("Welcome to the OrganizeIt.Cli!");
-                FileInfo? configFile = GetConfigFile(o.Config);
-                if (configFile == null)
+                if (i + 1 < args.Length)
                 {
-                    Console.WriteLine("Cannot proceed without a valid configuration file.");
-                    Console.ReadKey();
+                    configFileString = args[i + 1];
+                    i++;
+                }
+                else
+                {
+                    Console.WriteLine("Error: Missing config file path after -c or --config option.");
                     return;
                 }
-                Configs? configs = new Configs();
-                if (string.IsNullOrEmpty(o.Directory) || o.Directory.Equals("."))
+            }
+            else if (arg.StartsWith("-d") || arg.StartsWith("--directory"))
+            {
+                if (i + 1 < args.Length)
                 {
-                    o.Directory = Environment.CurrentDirectory;
+                    targetDirectory = args[i + 1];
+                    i++;
                 }
-                Console.WriteLine("Directory to organize: " + o.Directory);
-                configs = configs.GetConfigs(configFile);
-                int result = Organizer.Organize(o.Directory, configs);
-                if (result >= 1) Console.WriteLine("Organizer ran successfully!"); else Console.WriteLine("Organizer failed");
-                Console.WriteLine("Press any key to exit...");
-                Console.ReadKey();
+                else
+                {
+                    Console.WriteLine("Error: Missing target directory path after -d or --directory option.");
+                    return;
+                }
+            }
+            else if (arg.StartsWith("-h") || arg.StartsWith("--help"))
+            {
+                Console.WriteLine(HelpText.GetText());
                 return;
-            });
-        
-    }
+            }
+            else
+            {
+                Console.WriteLine($"Warning: Unknown argument: {arg}");
+            }
+        }
 
+        Console.WriteLine("Welcome to the OrganizeIt.Cli!");
+        FileInfo? configFile = GetConfigFile(configFileString);
+        if (configFile == null)
+        {
+            Console.WriteLine("Cannot proceed without a valid configuration file.");
+            Console.ReadKey();
+            return;
+        }
+
+        Configs? configs = new Configs();
+        if (string.IsNullOrEmpty(targetDirectory) || targetDirectory.Equals("."))
+        {
+            targetDirectory = Environment.CurrentDirectory;
+        }
+
+        Console.WriteLine("Directory to organize: " + targetDirectory);
+        configs = configs.GetConfigs(configFile);
+        int result = Organizer.Organize(targetDirectory, configs);
+        if (result >= 1) Console.WriteLine("Organizer ran successfully!"); else Console.WriteLine("Organizer failed");
+        Console.WriteLine("Press any key to exit...");
+        Console.ReadKey();
+        return;
+    }   
+    
     private static FileInfo? GetConfigFile(string? configPath)
     {
         string? filePath = string.IsNullOrEmpty(configPath) ? $"{Environment.CurrentDirectory}/config.json" : configPath;

@@ -84,7 +84,7 @@ The app currently supports organization by extensions. I'm working on making it 
 ```bash
 > organizeit.cli
 ```
-- Speciffy the path to the custome config.json using the -c flag
+- Speciffy the path to the custom config.json using the -c flag
 ```bash
 > organizeit.cli -c path/to/the/custom/config/file
 ```
