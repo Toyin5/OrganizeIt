@@ -1,4 +1,5 @@
-﻿using OrganizeIt.Core;
+﻿using OrganizeIt.Cli;
+using OrganizeIt.Core;
 
 public static class Program
 {
@@ -35,6 +36,11 @@ public static class Program
                     Console.WriteLine("Error: Missing target directory path after -d or --directory option.");
                     return;
                 }
+            }
+            else if (arg.StartsWith("-h") || arg.StartsWith("--help"))
+            {
+                Console.WriteLine(HelpText.GetText());
+                return;
             }
             else
             {
